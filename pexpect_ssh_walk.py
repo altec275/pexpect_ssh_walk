@@ -1,6 +1,12 @@
 import pexpect
 
+
 def pexpect_ssh_walk(terminal, directory):
+    
+    yield pexpect_ssh_parse_folder(terminal, directory)
+        
+
+def pexpect_ssh_parse_folder(terminal, directory):
     
     filelist = []
     folderlist = []
@@ -32,7 +38,5 @@ def pexpect_ssh_walk(terminal, directory):
                     folderlist.append(clean_name[:-1])
                 else:
                     filelist.append(clean_name)
-                
-    yield folderlist, filelist
-        
     
+    return folderlist, filelist
