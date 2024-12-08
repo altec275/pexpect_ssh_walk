@@ -1,25 +1,23 @@
-from pexpect_ssh_walk import pexpect_ssh_walk, pexpect_ssh_parse_folder
+from pexpect_ssh_walk import pexpect_ssh_walk, pexpect_ssh_walk_list
 from getpass import getpass
 import pexpect
+from time import sleep
 
-password = getpass()
-file_location = "/home/server/Documents/"
+password = getpass("Password for SSH to server: ")
+file_location = "/home/server/Documents"
 
 child = pexpect.spawnu("ssh server@mainserver")
 index = child.expect_exact(["server@mainserver's password: ", pexpect.TIMEOUT, pexpect.EOF, ], timeout=1)
 if index == 0:
     child.sendline(password)
+    sleep(0.5) # wait for a moment to allow the terminal SSH output to get saved to the buffer
 else:
     print('Failed to estabilish SSH connection.')
     exit()
-    
-for dirs, files in pexpect_ssh_walk(child, file_location):
+
+for root, dirs, files in pexpect_ssh_walk(child, file_location):
+    print(root)
     for file in files:
-        print(file)
+        print('\t'+file)
     for dir in dirs:
-        print(dir)
-        dirs2, files2 = pexpect_ssh_parse_folder(child, file_location+dir)
-        for dir2 in dirs2:
-            print("\t"+dir2)
-        for file2 in files2:
-            print("\t"+file2)
+        print('\t'+dir)
