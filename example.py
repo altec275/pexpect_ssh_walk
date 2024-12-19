@@ -1,4 +1,4 @@
-from pexpect_ssh_walk import pexpect_ssh_walk, pexpect_ssh_walk_list
+from pexpect_ssh_walk import pexpect_ssh_walk
 from getpass import getpass
 import pexpect
 from time import sleep
