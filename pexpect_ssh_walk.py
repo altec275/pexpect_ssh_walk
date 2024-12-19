@@ -26,7 +26,7 @@ def pexpect_ssh_parse_folder(terminal, directory):
     discard_buffer = True
     while True:
         # Get the current line
-        index = terminal.expect([r'(.*?\n)', "No such file or directory", pexpect.EOF, pexpect.TIMEOUT, ], timeout=0.5)
+        index = terminal.expect([r'(.*?\n)', "No such file or directory", pexpect.EOF, pexpect.TIMEOUT, ], timeout=0.1)
         # If no lines were found, exit the loop
         if index != 0:
             break
